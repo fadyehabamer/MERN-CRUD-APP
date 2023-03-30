@@ -1,9 +1,8 @@
 import { React } from 'react';
 import { useState } from 'react';
 import './App.css';
-import { useNavigate, useParams , useLocation } from 'react-router';
+import { useNavigate, useParams, useLocation } from 'react-router';
 import axios from 'axios';
-
 
 export default function Update() {
   const { id } = useParams();
@@ -32,7 +31,7 @@ export default function Update() {
 
   const handleSubmit = () => {
     axios
-      .put(`https://tame-pink-pelican-cuff.cyclic.app/${id}`, {
+      .put(`http://localhost:3001/updateuser/${id}`, {
         Headers: {
           'Content-Type': 'application/json',
         },

@@ -15,10 +15,27 @@ export default function MainScreen() {
   const createUser = (e) => {
     window.location.reload();
     e.preventDefault();
-    Axios.post('https://tame-pink-pelican-cuff.cyclic.app/createuser', {
+    if (
+      name === '' ||
+      email === '' ||
+      age === '' ||
+      age < 0 ||
+      age > 100 ||
+      isNaN(age) ||
+      !isNaN(name) ||
+      !isNaN(email) ||
+      !isNaN(age) ||
+      name.trim() === '' ||
+      email.trim() === '' ||
+      age.trim() === ''
+    ) {
+      alert('Please fill all the fields');
+      return;
+    }
+    Axios.post('http://localhost:3001/createuser', {
       name: name,
-      age: age,
       email: email,
+      age: age,
     }).then((res) => {
       alert('User Created');
     });
@@ -26,13 +43,13 @@ export default function MainScreen() {
 
   const deleteUser = (id) => {
     window.location.reload();
-    Axios.delete(`https://tame-pink-pelican-cuff.cyclic.app/deleteuser/${id}`).then((res) => {
+    Axios.delete(`http://localhost:3001/deleteuser/${id}`).then((res) => {
       console.log(res);
     });
   };
 
   useEffect(() => {
-    Axios.get('https://tame-pink-pelican-cuff.cyclic.app/users').then((res) => {
+    Axios.get('http://localhost:3001/users').then((res) => {
       setUsersArray(res.data);
     });
   }, []);
