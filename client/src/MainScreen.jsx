@@ -15,7 +15,7 @@ export default function MainScreen() {
   const createUser = (e) => {
     window.location.reload();
     e.preventDefault();
-    Axios.post('http://localhost:3001/createuser', {
+    Axios.post('https://tame-pink-pelican-cuff.cyclic.app/createuser', {
       name: name,
       age: age,
       email: email,
@@ -26,13 +26,13 @@ export default function MainScreen() {
 
   const deleteUser = (id) => {
     window.location.reload();
-    Axios.delete(`http://localhost:3001/deleteuser/${id}`).then((res) => {
+    Axios.delete(`https://tame-pink-pelican-cuff.cyclic.app/deleteuser/${id}`).then((res) => {
       console.log(res);
     });
   };
 
   useEffect(() => {
-    Axios.get('http://localhost:3001/users').then((res) => {
+    Axios.get('https://tame-pink-pelican-cuff.cyclic.app/users').then((res) => {
       setUsersArray(res.data);
     });
   }, []);

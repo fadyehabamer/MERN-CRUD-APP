@@ -32,7 +32,7 @@ export default function Update() {
 
   const handleSubmit = () => {
     axios
-      .put(`http://localhost:3001/updateuser/${id}`, {
+      .put(`https://tame-pink-pelican-cuff.cyclic.app/${id}`, {
         Headers: {
           'Content-Type': 'application/json',
         },
