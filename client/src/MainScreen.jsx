@@ -96,7 +96,6 @@ export default function MainScreen() {
                   <button
                     className="delete"
                     onClick={() => {
-                      toast.success('User Deleted Successfully');
                       deleteUser(val._id);
                     }}
                   >
