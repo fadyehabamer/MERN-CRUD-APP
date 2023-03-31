@@ -31,6 +31,7 @@ export default function Update() {
   };
 
   const handleSubmit = () => {
+    debugger;
     axios
       .put(`${baseUrl}/users/updateuser/${id}`, {
         Headers: {
@@ -40,14 +41,13 @@ export default function Update() {
         age: age || sentAge,
         email: email || sentEmail,
       })
-      .then((res) => {
+      .then(() => {
         alert('User Updated');
         navigate('/');
       })
       .catch((err) => {
         alert('Error');
       });
-
   };
 
   return (

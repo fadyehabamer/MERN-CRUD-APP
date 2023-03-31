@@ -5,17 +5,14 @@ import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
-  
   const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
-  
+
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
 
   const [usersArray, setUsersArray] = useState([]);
-
-
 
   const createUser = (e) => {
     e.preventDefault();
@@ -36,21 +33,23 @@ export default function MainScreen() {
       email: email,
       age: age,
     }).then((res) => {
-      alert('User Created');
-    });
-    debugger;
+    alert('User Created');
     window.location.reload();
-
+  });
+    // debugger;
   };
 
   const deleteUser = (id) => {
-    debugger;
-    Axios.delete(`${baseUrl}/users/deleteuser/${id}`).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    });
-    window.location.reload();
+    // debugger;
+    Axios.delete(`${baseUrl}/users/deleteuser/${id}`)
+      .then((res) => {
+        console.log(res);
+        alert('User Deleted');
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   useEffect(() => {
