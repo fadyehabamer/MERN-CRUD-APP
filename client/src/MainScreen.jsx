@@ -44,9 +44,11 @@ export default function MainScreen() {
   };
 
   const deleteUser = (id) => {
+    debugger;
     Axios.delete(`${baseUrl}/users/deleteuser/${id}`).then((res) => {
       console.log(res);
-      debugger;
+    }).catch((err) => {
+      console.log(err);
     });
     window.location.reload();
   };
@@ -118,7 +120,7 @@ export default function MainScreen() {
                     className="delete"
                     onClick={() => {
                       deleteUser(val._id);
-                      debugger;
+                      // debugger;
                     }}
                   >
                     Delete

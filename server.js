@@ -30,13 +30,13 @@ app.post('/users/createuser', async (req, res) => {
   res.json(newUser);
 });
 
-app.delete('users/deleteuser/:id', async (req, res) => {
+app.delete('/users/deleteuser/:id', async (req, res) => {
     const id = req.params.id;
     await UsersModel.findByIdAndDelete(id);
     res.json({message: 'User deleted'});
 });
 
-app.put('users/updateuser/:id', async (req, res) => {
+app.put('/users/updateuser/:id', async (req, res) => {
     const id = req.params.id;      
     const user = req.body;
     await UsersModel.findByIdAndUpdate(id, user);
