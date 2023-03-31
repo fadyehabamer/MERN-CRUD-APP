@@ -47,6 +47,7 @@ export default function Update() {
       .catch((err) => {
         alert('Error');
       });
+
   };
 
   return (

@@ -18,7 +18,6 @@ export default function MainScreen() {
 
 
   const createUser = (e) => {
-    window.location.reload();
     e.preventDefault();
     if (
       name === '' ||
@@ -39,13 +38,17 @@ export default function MainScreen() {
     }).then((res) => {
       alert('User Created');
     });
+    debugger;
+    window.location.reload();
+
   };
 
   const deleteUser = (id) => {
-    window.location.reload();
     Axios.delete(`${baseUrl}/users/deleteuser/${id}`).then((res) => {
       console.log(res);
+      debugger;
     });
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -115,6 +118,7 @@ export default function MainScreen() {
                     className="delete"
                     onClick={() => {
                       deleteUser(val._id);
+                      debugger;
                     }}
                   >
                     Delete

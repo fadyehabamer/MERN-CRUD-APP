@@ -36,7 +36,7 @@ app.delete('users/deleteuser/:id', async (req, res) => {
     res.json({message: 'User deleted'});
 });
 
-app.put('/updateuser/:id', async (req, res) => {
+app.put('users/updateuser/:id', async (req, res) => {
     const id = req.params.id;      
     const user = req.body;
     await UsersModel.findByIdAndUpdate(id, user);
