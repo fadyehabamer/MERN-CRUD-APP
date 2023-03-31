@@ -23,14 +23,14 @@ app.get('/users', (req, res) => {
   });
 });
 
-app.post('/createuser', async (req, res) => {
+app.post('/users/createuser', async (req, res) => {
   const user = req.body;
   const newUser = new UsersModel(user);
   await newUser.save();
   res.json(newUser);
 });
 
-app.delete('/deleteuser/:id', async (req, res) => {
+app.delete('users/deleteuser/:id', async (req, res) => {
     const id = req.params.id;
     await UsersModel.findByIdAndDelete(id);
     res.json({message: 'User deleted'});

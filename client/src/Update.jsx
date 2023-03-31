@@ -5,6 +5,7 @@ import { useNavigate, useParams, useLocation } from 'react-router';
 import axios from 'axios';
 
 export default function Update() {
+  const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ export default function Update() {
 
   const handleSubmit = () => {
     axios
-      .put(`http://localhost:3001/updateuser/${id}`, {
+      .put(`${baseUrl}/users/updateuser/${id}`, {
         Headers: {
           'Content-Type': 'application/json',
         },

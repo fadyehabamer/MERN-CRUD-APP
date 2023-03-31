@@ -5,12 +5,17 @@ import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
+  
+  const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
+  
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
 
   const [usersArray, setUsersArray] = useState([]);
+
+
 
   const createUser = (e) => {
     window.location.reload();
@@ -19,12 +24,7 @@ export default function MainScreen() {
       name === '' ||
       email === '' ||
       age === '' ||
-      age < 0 ||
-      age > 100 ||
       isNaN(age) ||
-      !isNaN(name) ||
-      !isNaN(email) ||
-      !isNaN(age) ||
       name.trim() === '' ||
       email.trim() === '' ||
       age.trim() === ''
@@ -32,7 +32,7 @@ export default function MainScreen() {
       alert('Please fill all the fields');
       return;
     }
-    Axios.post('http://localhost:3001/createuser', {
+    Axios.post(`${baseUrl}/users/createuser`, {
       name: name,
       email: email,
       age: age,
@@ -43,13 +43,13 @@ export default function MainScreen() {
 
   const deleteUser = (id) => {
     window.location.reload();
-    Axios.delete(`http://localhost:3001/deleteuser/${id}`).then((res) => {
+    Axios.delete(`${baseUrl}/users/deleteuser/${id}`).then((res) => {
       console.log(res);
     });
   };
 
   useEffect(() => {
-    Axios.get('http://localhost:3001/users').then((res) => {
+    Axios.get(`${baseUrl}/users`).then((res) => {
       setUsersArray(res.data);
     });
   }, []);
@@ -86,6 +86,7 @@ export default function MainScreen() {
         </button>
       </form>
 
+      {usersArray.length === 0 && <h3>No Users</h3>}
       <div className="users">
         {usersArray.length > 0 &&
           usersArray.map((val, key) => {
