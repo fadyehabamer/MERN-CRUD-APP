@@ -68,21 +68,25 @@ export default function Update() {
         type="text"
         name="name"
         placeholder="Name"
+        aria-label="Name"
         value={name}
         onChange={handleInputChange}
       />
       <input
-        type="text"
+        type="email"
         name="email"
         value={email}
         placeholder="Email"
+        aria-label="Email"
         onChange={handleInputChange}
       />
       <input
-        type="text"
+        type="number"
+        min="0"
         name="age"
         value={age}
-        placeholder="age"
+        placeholder="Age"
+        aria-label="Age"
         onChange={handleInputChange}
       />
       <button onClick={(e) => handleSubmit()}>Submit</button>

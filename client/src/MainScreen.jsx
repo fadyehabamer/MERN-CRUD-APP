@@ -74,22 +74,28 @@ export default function MainScreen() {
           type="text"
           name="name"
           placeholder="Name"
+          aria-label="Name"
+          autoComplete="name"
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
         <input
-          type="text"
+          type="email"
           name="email"
           placeholder="Email"
+          aria-label="Email"
+          autoComplete="email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
         />
         <input
-          type="text"
+          type="number"
+          min="0"
           name="age"
-          placeholder="age"
+          placeholder="Age"
+          aria-label="Age"
           onChange={(e) => {
             setAge(e.target.value);
           }}
@@ -113,6 +119,7 @@ export default function MainScreen() {
                 <div className="controls">
                   <button
                     className="edit"
+                    aria-label={`Edit ${val.name}`}
                     onClick={() =>
                       navigate(`/update/${val._id}`, {
                         state: {
@@ -127,6 +134,7 @@ export default function MainScreen() {
                   </button>
                   <button
                     className="delete"
+                    aria-label={`Delete ${val.name}`}
                     onClick={() => {
                       deleteUser(val._id);
                       // debugger;
