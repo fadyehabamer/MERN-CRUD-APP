@@ -1,11 +1,12 @@
 import { React } from 'react';
 import { useState } from 'react';
 import './App.css';
+import { API_BASE_URL } from './config';
 import { useNavigate, useParams, useLocation } from 'react-router';
 import axios from 'axios';
 
 export default function Update() {
-  const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
+  const baseUrl = API_BASE_URL;
   const { id } = useParams();
   const navigate = useNavigate();
 

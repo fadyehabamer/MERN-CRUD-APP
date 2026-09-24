@@ -1,11 +1,12 @@
 import React from 'react';
 import Axios from 'axios';
 import './App.css';
+import { API_BASE_URL } from './config';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
-  const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
+  const baseUrl = API_BASE_URL;
 
   const navigate = useNavigate();
   const [name, setName] = useState('');
