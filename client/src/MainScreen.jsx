@@ -2,7 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 import './App.css';
 import { API_BASE_URL } from './config';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
@@ -47,8 +47,7 @@ export default function MainScreen() {
   const deleteUser = (id) => {
     // debugger;
     Axios.delete(`${baseUrl}/users/deleteuser/${id}`)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         alert('User Deleted');
         window.location.reload();
       })
@@ -109,7 +108,7 @@ export default function MainScreen() {
       {!loadError && usersArray.length === 0 && <h3>No Users</h3>}
       <div className="users">
         {usersArray.length > 0 &&
-          usersArray.map((val, key) => {
+          usersArray.map((val) => {
             return (
               <div className="user" key={val._id}>
                 <h3>{val.name}</h3>
