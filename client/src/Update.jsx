@@ -1,4 +1,3 @@
-import { React } from 'react';
 import { useState } from 'react';
 import './App.css';
 import { API_BASE_URL } from './config';
@@ -35,12 +34,8 @@ export default function Update() {
   };
 
   const handleSubmit = () => {
-    debugger;
     axios
       .put(`${baseUrl}/users/updateuser/${id}`, {
-        Headers: {
-          'Content-Type': 'application/json',
-        },
         name: name || sentName,
         age: age || sentAge,
         email: email || sentEmail,
