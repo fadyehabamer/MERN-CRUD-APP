@@ -26,18 +26,21 @@ Invalid ids or input return `400`, and unknown ids return `404`.
 
 #### Prerequisites
 - Node.js 22.x
-- A MongoDB Atlas cluster (the connection string host is set in `server.js`)
+- A MongoDB database (for example a MongoDB Atlas cluster)
 
 #### Backend
 Create a `.env` file in the repository root (it is git-ignored):
 
 ```
-DB_NAME=xxx
-DB_USERNAME=xxx
-DB_PASSWORD=xxx
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster-host>/<database>?retryWrites=true&w=majority
 # optional, defaults to 3001
 PORT=3001
 ```
+
+The older `DB_USERNAME`, `DB_PASSWORD` and `DB_NAME` variables are still
+supported when `MONGODB_URI` is not set: they are combined into a connection
+string for the original Atlas cluster (`cluster0.t4ao1fy.mongodb.net`). New
+setups should use `MONGODB_URI`, which takes precedence when both are present.
 
 Then, from the root directory:
 ```
