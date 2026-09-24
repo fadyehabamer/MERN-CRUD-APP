@@ -1,11 +1,12 @@
 import React from 'react';
 import Axios from 'axios';
 import './App.css';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from './config';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
-  const baseUrl = 'https://mern-crud-app-cig8.onrender.com';
+  const baseUrl = API_BASE_URL;
 
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -13,6 +14,7 @@ export default function MainScreen() {
   const [age, setAge] = useState('');
 
   const [usersArray, setUsersArray] = useState([]);
+  const [loadError, setLoadError] = useState('');
 
   const createUser = (e) => {
     e.preventDefault();
@@ -32,18 +34,20 @@ export default function MainScreen() {
       name: name,
       email: email,
       age: age,
-    }).then((res) => {
-    alert('User Created');
-    window.location.reload();
-  });
-    // debugger;
+    })
+      .then(() => {
+        alert('User Created');
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(err.response?.data?.message || 'Could not create user');
+      });
   };
 
   const deleteUser = (id) => {
     // debugger;
     Axios.delete(`${baseUrl}/users/deleteuser/${id}`)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         alert('User Deleted');
         window.location.reload();
       })
@@ -53,9 +57,13 @@ export default function MainScreen() {
   };
 
   useEffect(() => {
-    Axios.get(`${baseUrl}/users`).then((res) => {
-      setUsersArray(res.data);
-    });
+    Axios.get(`${baseUrl}/users`)
+      .then((res) => {
+        setUsersArray(res.data);
+      })
+      .catch(() => {
+        setLoadError('Could not load users. Please try again later.');
+      });
   }, []);
   return (
     <div className="App">
@@ -65,22 +73,28 @@ export default function MainScreen() {
           type="text"
           name="name"
           placeholder="Name"
+          aria-label="Name"
+          autoComplete="name"
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
         <input
-          type="text"
+          type="email"
           name="email"
           placeholder="Email"
+          aria-label="Email"
+          autoComplete="email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
         />
         <input
-          type="text"
+          type="number"
+          min="0"
           name="age"
-          placeholder="age"
+          placeholder="Age"
+          aria-label="Age"
           onChange={(e) => {
             setAge(e.target.value);
           }}
@@ -90,10 +104,11 @@ export default function MainScreen() {
         </button>
       </form>
 
-      {usersArray.length === 0 && <h3>No Users</h3>}
+      {loadError && <p role="alert">{loadError}</p>}
+      {!loadError && usersArray.length === 0 && <h3>No Users</h3>}
       <div className="users">
         {usersArray.length > 0 &&
-          usersArray.map((val, key) => {
+          usersArray.map((val) => {
             return (
               <div className="user" key={val._id}>
                 <h3>{val.name}</h3>
@@ -103,6 +118,7 @@ export default function MainScreen() {
                 <div className="controls">
                   <button
                     className="edit"
+                    aria-label={`Edit ${val.name}`}
                     onClick={() =>
                       navigate(`/update/${val._id}`, {
                         state: {
@@ -117,6 +133,7 @@ export default function MainScreen() {
                   </button>
                   <button
                     className="delete"
+                    aria-label={`Delete ${val.name}`}
                     onClick={() => {
                       deleteUser(val._id);
                       // debugger;

@@ -19,26 +19,47 @@ DELETE /users/deleteuser/:id - Deletes a specific user from the database, where 
 PUT /users/updateuser/:id - Updates data for a specific user in the database, where :id is the ID of the user to be updated.
 ```
 
+User documents have `name` (string), `email` (string) and `age` (number, >= 0), all required.
+Invalid ids or input return `400`, and unknown ids return `404`.
+
 ### Running the Application
-> Before running the application, make sure to set up the environment variables for the backend in .env file:
+
+#### Prerequisites
+- Node.js 22.x
+- A MongoDB Atlas cluster (the connection string host is set in `server.js`)
+
+#### Backend
+Create a `.env` file in the repository root (it is git-ignored):
 
 ```
 DB_NAME=xxx
 DB_USERNAME=xxx
 DB_PASSWORD=xxx
+# optional, defaults to 3001
+PORT=3001
 ```
 
-
-> To start the backend server, navigate to the root directory and run:
+Then, from the root directory:
 ```
 npm install
-npm start
+npm run dev   # loads .env and restarts on changes (nodemon)
 ```
 
-> To start the frontend server, navigate to the client directory and run:
+`npm start` runs `node server.js` without loading `.env`; use it where the
+environment variables are provided by the host (e.g. Render).
+
+#### Frontend
+From the `client` directory:
 ```
 npm install
-npm run dev
+npm run dev     # start the Vite dev server
+npm run build   # production build into client/dist
+```
+
+By default the client talks to the deployed backend. To use your local server,
+create `client/.env.local` with:
+```
+VITE_API_URL=http://localhost:3001
 ```
 
 ### Deployment
