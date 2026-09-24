@@ -2,7 +2,7 @@ import { React } from 'react';
 import { useState } from 'react';
 import './App.css';
 import { API_BASE_URL } from './config';
-import { useNavigate, useParams, useLocation } from 'react-router';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Update() {
@@ -12,13 +12,16 @@ export default function Update() {
 
   const location = useLocation();
 
-  const sentName = location.state.name;
-  const sentEmail = location.state.email;
-  const sentAge = location.state.age;
+  // The user's current values are passed via router state from the list page.
+  // It is missing when this URL is opened directly or the page is reloaded.
+  const initial = location.state ?? {};
+  const sentName = initial.name;
+  const sentEmail = initial.email;
+  const sentAge = initial.age;
 
-  const [name, setName] = useState(location.state.name);
-  const [email, setEmail] = useState(location.state.email);
-  const [age, setAge] = useState(location.state.age);
+  const [name, setName] = useState(sentName ?? '');
+  const [email, setEmail] = useState(sentEmail ?? '');
+  const [age, setAge] = useState(sentAge ?? '');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +53,17 @@ export default function Update() {
         alert('Error');
       });
   };
+
+  if (!location.state) {
+    return (
+      <div className="App">
+        <h1>Update User</h1>
+        <p>
+          Please choose a user to edit from the <Link to="/">users list</Link>.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
