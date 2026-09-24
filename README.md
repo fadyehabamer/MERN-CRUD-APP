@@ -51,6 +51,15 @@ npm run dev   # loads .env and restarts on changes (nodemon)
 `npm start` runs `node server.js` without loading `.env`; use it where the
 environment variables are provided by the host (e.g. Render).
 
+#### Tests
+```
+npm test
+```
+
+The API tests (`test/`) use Node's built-in test runner with
+[mongodb-memory-server](https://github.com/typegoose/mongodb-memory-server), so
+they need no database or `.env`. The first run downloads a MongoDB binary.
+
 #### Frontend
 From the `client` directory:
 ```
@@ -70,3 +79,4 @@ VITE_API_URL=http://localhost:3001
 
 - To deploy the backend, follow the instructions in the [Render Documentation](https://render.com/docs).
 - To deploy the frontend, follow the instructions in the [Vercel Documentation](https://vercel.com/docs).
+  With the Vercel project's root directory set to `client`, `client/vercel.json` rewrites every path to `index.html` so routes such as `/update/:id` load on refresh.
