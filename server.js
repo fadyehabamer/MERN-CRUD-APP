@@ -1,4 +1,4 @@
-const port = 3001;
+const port = process.env.PORT || 3001;
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -66,5 +66,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log('Server is running... on port 3001');
+  console.log(`Server is running on port ${port}`);
 });
