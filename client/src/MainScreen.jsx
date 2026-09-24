@@ -14,6 +14,7 @@ export default function MainScreen() {
   const [age, setAge] = useState('');
 
   const [usersArray, setUsersArray] = useState([]);
+  const [loadError, setLoadError] = useState('');
 
   const createUser = (e) => {
     e.preventDefault();
@@ -33,11 +34,14 @@ export default function MainScreen() {
       name: name,
       email: email,
       age: age,
-    }).then((res) => {
-    alert('User Created');
-    window.location.reload();
-  });
-    // debugger;
+    })
+      .then(() => {
+        alert('User Created');
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(err.response?.data?.message || 'Could not create user');
+      });
   };
 
   const deleteUser = (id) => {
@@ -54,9 +58,13 @@ export default function MainScreen() {
   };
 
   useEffect(() => {
-    Axios.get(`${baseUrl}/users`).then((res) => {
-      setUsersArray(res.data);
-    });
+    Axios.get(`${baseUrl}/users`)
+      .then((res) => {
+        setUsersArray(res.data);
+      })
+      .catch(() => {
+        setLoadError('Could not load users. Please try again later.');
+      });
   }, []);
   return (
     <div className="App">
@@ -91,7 +99,8 @@ export default function MainScreen() {
         </button>
       </form>
 
-      {usersArray.length === 0 && <h3>No Users</h3>}
+      {loadError && <p role="alert">{loadError}</p>}
+      {!loadError && usersArray.length === 0 && <h3>No Users</h3>}
       <div className="users">
         {usersArray.length > 0 &&
           usersArray.map((val, key) => {
