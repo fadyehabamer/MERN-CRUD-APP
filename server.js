@@ -22,14 +22,22 @@ const UsersModel = require('./models/Users');
 const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
+// Only accept the fields the schema defines, so clients cannot set _id or
+// other internal fields. Omitted fields are left out rather than set to
+// undefined, so partial updates don't clear existing values.
+const USER_FIELDS = ['name', 'email', 'age'];
+const pickUserFields = (body = {}) =>
+  Object.fromEntries(
+    USER_FIELDS.filter((key) => body[key] !== undefined).map((key) => [key, body[key]])
+  );
+
 app.get('/users', asyncHandler(async (req, res) => {
   const users = await UsersModel.find();
   res.json(users);
 }));
 
 app.post('/users/createuser', asyncHandler(async (req, res) => {
-  const user = req.body;
-  const newUser = new UsersModel(user);
+  const newUser = new UsersModel(pickUserFields(req.body));
   await newUser.save();
   res.json(newUser);
 }));
@@ -45,8 +53,9 @@ app.delete('/users/deleteuser/:id', asyncHandler(async (req, res) => {
 
 app.put('/users/updateuser/:id', asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const user = req.body;
-  const updated = await UsersModel.findByIdAndUpdate(id, user);
+  const updated = await UsersModel.findByIdAndUpdate(id, pickUserFields(req.body), {
+    runValidators: true,
+  });
   if (!updated) {
     return res.status(404).json({ message: 'User not found' });
   }
