@@ -1,4 +1,3 @@
-import React from 'react';
 import Axios from 'axios';
 import './App.css';
 import { API_BASE_URL } from './config';
@@ -6,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function MainScreen() {
-  const baseUrl = API_BASE_URL;
 
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -30,7 +28,7 @@ export default function MainScreen() {
       alert('Please fill all the fields');
       return;
     }
-    Axios.post(`${baseUrl}/users/createuser`, {
+    Axios.post(`${API_BASE_URL}/users/createuser`, {
       name: name,
       email: email,
       age: age,
@@ -46,7 +44,7 @@ export default function MainScreen() {
 
   const deleteUser = (id) => {
     // debugger;
-    Axios.delete(`${baseUrl}/users/deleteuser/${id}`)
+    Axios.delete(`${API_BASE_URL}/users/deleteuser/${id}`)
       .then(() => {
         alert('User Deleted');
         window.location.reload();
@@ -57,7 +55,7 @@ export default function MainScreen() {
   };
 
   useEffect(() => {
-    Axios.get(`${baseUrl}/users`)
+    Axios.get(`${API_BASE_URL}/users`)
       .then((res) => {
         setUsersArray(res.data);
       })
