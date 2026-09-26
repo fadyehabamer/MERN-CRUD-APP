@@ -1,4 +1,7 @@
 ## MERN CRUD App
+
+[![CI](https://github.com/fadyehabamer/MERN-CRUD-APP/actions/workflows/ci.yml/badge.svg)](https://github.com/fadyehabamer/MERN-CRUD-APP/actions/workflows/ci.yml)
+
 > This is a simple MERN stack CRUD application that allows users to perform basic CRUD operations on a list of users.
 
 ### Technologies used
