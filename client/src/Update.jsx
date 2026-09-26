@@ -44,7 +44,7 @@ export default function Update() {
         alert('User Updated');
         navigate('/');
       })
-      .catch((err) => {
+      .catch(() => {
         alert('Error');
       });
   };
@@ -89,7 +89,7 @@ export default function Update() {
         aria-label="Age"
         onChange={handleInputChange}
       />
-      <button onClick={(e) => handleSubmit()}>Submit</button>
+      <button onClick={() => handleSubmit()}>Submit</button>
     </div>
   );
 }
